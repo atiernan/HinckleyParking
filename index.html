@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>Hinckley Parking QR Code</title>
+    </head>
+    <body style="margin: 0px;">
+        <canvas id="qr"></canvas>
+        <script src="./js/qrious.min.js"></script>
+        <script src="./js/moment.js"></script>
+        <script>
+            // S001 P12 2018 12 27 17 55 08 A
+            (function() {
+                var code = "S001P12" + moment().add(1, 'hour').format('YYYYMMDDhhmmss') + "A";
+                var w = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+                var h = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+                var size = Math.min(w,h);
+                console.log(code);
+                var qr = new QRious({
+                    element: document.getElementById('qr'),
+                    value: code,
+                    size: size,
+                    level: "L"
+                });
+            })();
+        </script>
+    </body>
+<html>
