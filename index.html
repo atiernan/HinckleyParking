@@ -3,7 +3,12 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <title>Hinckley Parking QR Code</title>
+        <link rel="apple-touch-startup-image" href="./img/launch.png">
+        <meta name="msapplication-TileColor" content="#ffffff">
+        <meta name="msapplication-TileImage" content="./img/launch.png">
+        <meta name="theme-color" content="#ffffff">
+        <link rel="manifest" href="./manifest.json">
+        <title>Hinckley Parking</title>
     </head>
     <body style="margin: 0px;">
         <canvas id="qr"></canvas>
@@ -16,7 +21,6 @@
                 var w = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
                 var h = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
                 var size = Math.min(w,h);
-                console.log(code);
                 var qr = new QRious({
                     element: document.getElementById('qr'),
                     value: code,

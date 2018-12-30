@@ -1,0 +1,16 @@
+{
+    "short_name": "Hinckley Parking",
+    "name": "Hinckley Parking",
+    "theme_color": "#4A90E2",
+    "background_color": "#F7F8F9",
+    "display": "standalone",
+    "icons": [
+        {  
+            "src": "./img/launch.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "density": "1"
+        }
+    ],
+    "start_url": "/index.html"
+}
