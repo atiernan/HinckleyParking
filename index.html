@@ -9,48 +9,54 @@
         <meta name="theme-color" content="#ffffff">
         <link rel="manifest" href="./manifest.json">
         <link rel="apple-touch-icon" href="./img/launch.png">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
         <title>Hinckley Parking</title>
     </head>
-    <body style="margin: 0px;">
+    <body style="margin:5px;font-family: 'Open Sans', sans-serif;">
         <div>
             <canvas id="qr"></canvas>
-            <button id="btnAdd" style="vertical-align:top;margin-top:10px;display:none">Add to home page</button>
+            <h1 style="display:inline-block;vertical-align:top;text-align:center;">This voucher will expire <span id="durationRemaining"></span></h1>
         </div>
         <script src="./js/qrious.min.js"></script>
         <script src="./js/moment.js"></script>
         <script>
-            // S001 P12 2018 12 27 17 55 08 A
+            /*  S001P1220181227175508A
+             *  S001    Static
+             *  P12     Printer number
+             *  2018    Expiry Year
+             *  12      Expiry Month
+             *  27      Expiry Date
+             *  17      Expiry Hour
+             *  55      Expiry  Minute
+             *  08      Expiry Second
+             *  A       Static
+             */
+            let expiryDate;
+            function updateExpiryString() {
+                durationRemaining.innerHTML = expiryDate.fromNow();
+            }
             (function() {
-                var code = "S001P12" + moment().add(1, 'hour').format('YYYYMMDDhhmmss') + "A";
+                expiryDate = moment().add(1, 'hour');
+                updateExpiryString();
+                var code = "S001P12" + expiryDate.format('YYYYMMDDhhmmss') + "A";
                 var w = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
                 var h = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
-                var size = Math.min(w,h);
+                var size = Math.min(w,h) - 10;
                 var qr = new QRious({
                     element: document.getElementById('qr'),
                     value: code,
                     size: size,
                     level: "L"
                 });
-            })();
-
-            let deferredPrompt;
-            window.addEventListener('beforeinstallprompt', (e) => {
-                e.preventDefault();
-                deferredPrompt = e;
-                btnAdd.style.display = 'block';
-            });
-            btnAdd.addEventListener('click', (e) => {
-                btnAdd.style.display = 'none';
-                deferredPrompt.prompt();
-                deferredPrompt.userChoice.then((choiceResult) => {
-                    if (choiceResult.outcome === 'accepted') {
-                        console.log('User accepted the A2HS prompt');
+                setInterval(function(){
+                    if (expiryDate.isAfter()) {
+                        updateExpiryString();
                     } else {
-                        console.log('User dismissed the A2HS prompt');
+                        location.reload();
                     }
-                    deferredPrompt = null;
-                });
-            });
+                }, 1000);
+            })();
         </script>
     </body>
 <html>
