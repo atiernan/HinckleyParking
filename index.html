@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" style="height: 100%;">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -13,10 +13,17 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
         <title>Hinckley Parking</title>
     </head>
-    <body style="margin:5px;font-family: 'Open Sans', sans-serif;">
-        <div>
-            <canvas id="qr"></canvas>
-            <h1 style="display:inline-block;vertical-align:top;text-align:center;">This voucher will expire <span id="durationRemaining"></span></h1>
+    <body style="margin:5px;font-family: 'Open Sans', sans-serif;height: 100%;">
+        <div class="container" style="height: 100%;">
+            <div class="row align-items-center" style="height: 100%;">
+                <div class="col-sm-6">
+                    <canvas id="qr" style="width:100%"></canvas>
+                </div>
+                <div class="col-sm-6">
+                    <h1 style="display:inline-block;vertical-align:top;text-align:center;margin-bottom:30px">This voucher will expire <span id="durationRemaining"></span></h1>
+                    <button style="width: 150px;display:block" class="mx-auto btn btn-primary">Refresh Voucher</button>
+                </div>
+            </div>
         </div>
         <script src="./js/qrious.min.js"></script>
         <script src="./js/moment.js"></script>
@@ -42,7 +49,7 @@
                 var code = "S001P12" + expiryDate.format('YYYYMMDDhhmmss') + "A";
                 var w = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
                 var h = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
-                var size = Math.min(w,h) - 10;
+                var size = Math.max(w,h);
                 var qr = new QRious({
                     element: document.getElementById('qr'),
                     value: code,
