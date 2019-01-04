@@ -11,6 +11,7 @@
         <link rel="apple-touch-icon" href="./img/launch.png">
         <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
         <title>Hinckley Parking</title>
     </head>
     <body style="margin:5px;font-family: 'Open Sans', sans-serif;height: 100%;">
@@ -20,8 +21,9 @@
                     <canvas id="qr" style="width:100%"></canvas>
                 </div>
                 <div class="col-sm-6">
-                    <h1 style="display:inline-block;vertical-align:top;text-align:center;margin-bottom:30px">This voucher will expire <span id="durationRemaining"></span></h1>
-                    <button style="width: 150px;display:block" onclick="location.reload();" class="mx-auto btn btn-primary">Refresh Voucher</button>
+                    <h1 style="display:inline-block;vertical-align:top;text-align:center;">This voucher will expire <span id="durationRemaining"></span></h1>
+                    <button style="width:150px;display:block;margin:30px 0px" onclick="location.reload();" class="mx-auto btn btn-primary"><i class="fas fa-sync-alt"></i> Refresh</button>
+                    <button id="shareButton" style="width:150px;display:none" class="mx-auto btn btn-success" onclick="navigator.share({url:'https://atiernan.github.io/HinckleyParking',title: document.title,})"><i class="fas fa-share-alt"></i> Share</button>
                 </div>
             </div>
         </div>
@@ -56,6 +58,11 @@
                     size: size,
                     level: "L"
                 });
+
+                if (!navigator.share) {
+                    document.getElementById('shareButton').style.display = "block";
+                }
+                
                 setInterval(function(){
                     if (expiryDate.isAfter()) {
                         updateExpiryString();
