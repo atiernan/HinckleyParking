@@ -59,7 +59,7 @@
                     level: "L"
                 });
 
-                if (!navigator.share) {
+                if (navigator.share) {
                     document.getElementById('shareButton').style.display = "block";
                 }
                 
